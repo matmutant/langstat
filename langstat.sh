@@ -33,59 +33,25 @@ if [ ! -f $1 ] ; then
 	echo -e "Recommencez avec un nom de fichier valide"
 exit 1
 else
-#créé le fichier temporaire
-		touch resultat.txt
-#récupère le contenu du fichier source
-		texte="$(cat $1)"
-#préparer le tableau
-	declare -A HODOR
-	for word in $texte; do 
-#recherche la présence des lettres dans chaque mot et incrémente
-			echo $word
-			for x in {A..Z}; do
-			case $word in
-				*$x*)
-					#echo $x found
-					 ((HODOR["$x"]++))
-			;;
-			*)
-			esac
-			done
-	done
-	for i in "${!HODOR[@]}"; do
-		    echo "${HODOR[$i]} - $i" >> resultat.txt
-	done
-	clear
-
 #Choix du type d'affichage en fonction du second paramètre.
 	if [ -z $2 ]; then
 #arrange par ordre décroissant : 
 		echo -e "Affichage des resultats par ordre décroissant."
-		sort -rn ./resultat.txt
+		for lettre in {A..Z}; do
+			echo "`grep -c $lettre $1` - $lettre"
+		done | sort -rn
 
 	elif [ $2 = "--osef" ]; then
 
 		echo -e "Affichage des resultats sans tri."
-		cat ./resultat.txt
+		for lettre in {A..Z}; do
+			echo "`grep -c $lettre $1` - $lettre"
+		done
 
 #si les paramètres ne correspondent pas une erreur est retournée
 	else
 		echo -e "\033[1;31m ERREUR DE SAISIE\033[0m"
-		echo -e "Affichage des resultats sans tri."
-		cat ./resultat.txt
 	fi
-echo -e "Voulez vous \033[1;31mconserver\033[0m les résultats? [o/n]"
-read -n 1 suppr
-
-if [ $suppr = n ] ; then
-	rm resultat.txt
-elif [ $suppr = o ] ; then
-	echo
-	exit 1
-else
-	echo -e "\033[1;31mERREUR\033[0m, suppression des résultats"
-	rm resultat.txt
-fi
 fi
 echo
 exit 1
