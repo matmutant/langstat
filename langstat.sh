@@ -13,44 +13,43 @@ else
 	echo -e "the first parameter is $1"
 fi
 #Displays Help
-#NB: en cas d'absence de second paramètre une erreur est retournée, celle-ci est automatiquement eliminée
+#NB: When there is no second option, an error is returned, but trashed automatically
 if [ $1 = "--help" ] || [ $2 = "--help" ] 2> /dev/null
 	then
 	echo
-	echo -e "\033[1;31mAide et Support\033[0m"
-	echo -e "Les paramètres disponibles :"
-	echo -e "syntaxe : \033[1m./langstat.sh \033[0;31m \033[0;4mfichier\033[0m [\033[0;4moptions\033[0m]"
+	echo -e "\033[1;31mHelp\033[0m"
+	echo -e "Available options:"
+	echo -e "syntax : \033[1m./langstat.sh \033[0;31m \033[0;4mfile\033[0m [\033[0;4moptions\033[0m]"
 	echo
-	echo -e "le fichier à traiter dans le répertoire courant (ex : dico.txt)"
-	echo -e "	--osef pour afficher le résultat sans tri décroissant préalable"
-	echo -e "	--help pour afficher l'aide"
+	echo -e "The file to work on is in current folder (ex : dico.txt)"
+	echo -e "	--osef To display results with no specific order"
+	echo -e "	--help To display help"
 	echo
 	exit 1
 fi
-#vérifie que le paramètre 1 est bien un fichier.
+#makes sure that second option is really a file.
 if [ ! -f $1 ] ; then
-	echo -e "\033[1;31mLe fichier n'existe pas\033[0m"
-	echo -e "Recommencez avec un nom de fichier valide"
+	echo -e "\033[1;31mFile does not exist\033[0m"
+	echo -e "Retry with a valid file name"
 exit 1
 else
-#Choix du type d'affichage en fonction du second paramètre.
+#Choice for display type depending on second option.
 	if [ -z $2 ]; then
-#arrange par ordre décroissant : 
-		echo -e "Affichage des resultats par ordre décroissant."
-		for lettre in {A..Z}; do
-			echo "`grep -c $lettre $1` - $lettre"
+#order by higher>lower:
+		echo -e "Results displayed from higher to lower."
+		for letter in {A..Z}; do
+			echo "`grep -c $letter $1` - $letter"
 		done | sort -rn
 
 	elif [ $2 = "--osef" ]; then
 
-		echo -e "Affichage des resultats sans tri."
-		for lettre in {A..Z}; do
-			echo "`grep -c $lettre $1` - $lettre"
+		echo -e "Results displayed by alphabetical order."
+		for letter in {A..Z}; do
+			echo "`grep -c $letter $1` - $letter"
 		done
-
-#si les paramètres ne correspondent pas une erreur est retournée
+#If invalid options : error returned
 	else
-		echo -e "\033[1;31m ERREUR DE SAISIE\033[0m"
+		echo -e "\033[1;31m SYNTAX ERROR\033[0m"
 	fi
 fi
 echo
