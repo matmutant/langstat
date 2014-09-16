@@ -1,18 +1,18 @@
 #!/bin/bash
-#titre
+#title
 clear
 echo -e "\033[1;31mLanguage statistics script for Linux\033[0m"
 echo
-#teste la présence d'au moins un paramètre
+#test if at least one option is present
 if [ -z $1 ]; then
-	echo -e "\033[1;31mIl faut au moins 1 paramètre\033[0m"
-        echo "Afficher l'aide avec le paramètre --help"
+	echo -e "\033[1;31mNeeds at least 1 option\033[0m"
+        echo "Display Help with --help"
 	exit 1
 else
-	echo -e "Vous avez lancé $0, il y a $#  paramètre(s)"
-	echo -e "Le paramètre 1 est $1"
+	echo -e "You launched $0, there is $#  parameter(s)"
+	echo -e "the first parameter is $1"
 fi
-#affiche l'aide
+#Displays Help
 #NB: en cas d'absence de second paramètre une erreur est retournée, celle-ci est automatiquement eliminée
 if [ $1 = "--help" ] || [ $2 = "--help" ] 2> /dev/null
 	then
